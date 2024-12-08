@@ -1,6 +1,8 @@
 ### Summary
 While using the latest version (<=v0.8.1) of MetaGPT's `TreeofThought.solve` method, we discovered that users can guide the large language model through dialogue to generate malicious code. This code can then be executed by triggering the `eval` method within the `ThoughtSolverBase.generate_thoughts` function, enabling the execution of arbitrary commands. The risky code is shown in the figure below.
 
+<img width="335" alt="image" src="https://github.com/user-attachments/assets/33585033-dc79-4bc4-9c9e-6259952c160e">
+
 ### Details
 We used the template provided in [creative_writing.py](https://github.com/geekan/MetaGPT/blob/main/tests/metagpt/strategy/prompt_templates/creative_writing.py) and the test code in [test_creative_writing.py](https://github.com/geekan/MetaGPT/blob/main/tests/metagpt/strategy/examples/test_creative_writing.py) to validate that a malicious user can pass malicious code to the eval method in ThoughtSolverBase.generate_thoughts. By utilizing the jailbreak technique provided in the PoC, we bypassed the restrictions imposed by the creative_writing template on malicious user inputs. This allowed us to embed malicious code within the conversation, guide the large language model to return the malicious code, and subsequently trigger the RCE vulnerability.
 
